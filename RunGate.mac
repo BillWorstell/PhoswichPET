@@ -1,0 +1,1 @@
+$Gate -a [CZCThickness,25][BGOThickness,10][CZCHalf,12.5][BGOHalf,5][RunTime,1] ./main/RunPhoswichHits.mac
