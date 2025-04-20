@@ -1,0 +1,292 @@
+# VisTestPVModule-00.mac
+/vis/enable
+#/control/execute vis.mac
+
+## Scintillator Geometry
+## Pixel size: 3.2 mm
+## Pixel Array: 16 x 16
+## Pixel Pitch: 3.2 x 3.2 mm
+## Detector surface size: 50x50 mm^2
+## Detector thickness:
+## Layer 0 BGO: 10 mm
+## Layer 1 CZC: 25 mm
+
+/vis/open OGLIX
+#/vis/viewer/set/viewpointThetaPhi -30 30
+/vis/viewer/set/viewpointThetaPhi 30 -20
+/vis/viewer/zoom 3.0
+/vis/drawVolume
+/tracking/storeTrajectory 1
+/vis/scene/add/trajectories
+#/vis/scene/endOfEventAction accumulate 100
+#/vis/scene/add/axes
+
+/gate/geometry/setMaterialDatabase GateMaterials.db
+
+# Geometry
+
+# World
+/gate/world/geometry/setXLength 10 cm
+/gate/world/geometry/setYLength 10 cm
+/gate/world/geometry/setZLength 10 cm
+/gate/world/vis/setVisible 0
+
+#################################Detector1#################################
+
+# C Y L I N D R I C A L
+/gate/world/daughters/name cylindricalPET
+/gate/world/daughters/systemType cylindricalPET
+/gate/world/daughters/insert cylinder
+/gate/cylindricalPET/setMaterial Air
+/gate/cylindricalPET/geometry/setRmax 10 cm
+/gate/cylindricalPET/geometry/setRmin 0 cm
+/gate/cylindricalPET/geometry/setHeight 10 cm
+/gate/cylindricalPET/vis/forceWireframe
+/gate/world/vis/setVisible 0
+
+# R S E C T O R
+/gate/cylindricalPET/daughters/name PETHead
+/gate/cylindricalPET/daughters/insert box
+/gate/PETHead/placement/setTranslation  0. 0. 0. mm
+/gate/PETHead/geometry/setXLength 56.000000 mm
+/gate/PETHead/geometry/setYLength 41.000000 mm
+/gate/PETHead/geometry/setZLength 56.000000 mm
+/gate/PETHead/placement/setRotationAxis 0 0 1
+/gate/PETHead/placement/setRotationAngle 0. deg
+/gate/PETHead/placement/setTranslation  0. 0. 0. mm
+/gate/PETHead/setMaterial Air
+/gate/PETHead/vis/forceWireframe
+/gate/PETHead/vis/setVisible 0
+
+# BLOCK
+/gate/PETHead/daughters/name PETBlock
+/gate/PETHead/daughters/insert box
+/gate/PETBlock/geometry/setXLength 53.000000 mm
+/gate/PETBlock/geometry/setYLength 38.000000 mm
+/gate/PETBlock/geometry/setZLength 53.000000 mm
+/gate/PETBlock/placement/setRotationAxis 1 0 0
+/gate/PETBlock/placement/setRotationAngle 0. deg
+/gate/PETBlock/setMaterial Air
+/gate/PETBlock/vis/forceWireframe
+/gate/PETBlock/vis/setVisible 0
+
+# S U B M O D U L E
+# Scanner Head
+/gate/PETBlock/daughters/name PETSubModule
+/gate/PETBlock/daughters/insert box
+/gate/PETSubModule/geometry/setXLength 52.000000 mm
+/gate/PETSubModule/geometry/setYLength 37.000000 mm
+/gate/PETSubModule/geometry/setZLength 52.000000 mm
+/gate/PETSubModule/setMaterial Air
+/gate/PETSubModule/vis/forceWireframe
+/gate/PETSubModule/vis/setVisible 0
+
+#
+# M O D U L E
+# Module
+/gate/PETSubModule/daughters/name module-1
+/gate/PETSubModule/daughters/insert box
+/gate/module-1/geometry/setXLength 51.000000 mm
+/gate/module-1/geometry/setYLength 36.000000 mm
+/gate/module-1/geometry/setZLength 51.000000 mm
+/gate/module-1/placement/setTranslation  0. 0. 0. mm
+/gate/module-1/setMaterial Air
+/gate/module-1/vis/setColor white
+/gate/module-1/vis/forceWireframe
+/gate/module-1/vis/setVisible 0
+
+# C R Y S T A L
+# Pixel
+/gate/module-1/daughters/name pixel-1
+/gate/module-1/daughters/insert box
+/gate/pixel-1/geometry/setXLength 3.200000 mm
+/gate/pixel-1/geometry/setYLength 37. mm
+/gate/pixel-1/geometry/setZLength 3.200000 mm
+/gate/pixel-1/placement/setTranslation  0. 0. 0. mm
+/gate/pixel-1/setMaterial Air
+/gate/pixel-1/vis/setColor black
+/gate/pixel-1/vis/forceWireframe
+/gate/pixel-1/vis/setVisible 1
+/gate/pixel-1/repeaters/insert cubicArray
+
+## L A Y E R 0
+/gate/pixel-1/daughters/name CZC
+/gate/pixel-1/daughters/insert box
+/gate/CZC/geometry/setXLength 3.000000 mm
+/gate/CZC/geometry/setYLength 25. mm
+/gate/CZC/geometry/setZLength 3.000000 mm
+/gate/CZC/placement/setTranslation 0 -6.0 0 mm
+/gate/CZC/setMaterial CZC
+/gate/CZC/vis/forceSolid
+/gate/CZC/vis/setColor yellow
+
+##  L A Y E R 1
+/gate/pixel-1/daughters/name BGO
+/gate/pixel-1/daughters/insert box
+/gate/BGO/geometry/setXLength 3.000000 mm
+/gate/BGO/geometry/setYLength 10. mm
+/gate/BGO/geometry/setZLength 3.000000 mm
+/gate/BGO/placement/setTranslation 0 12.5 0 mm
+/gate/BGO/setMaterial BGO
+/gate/BGO/vis/forceSolid
+/gate/BGO/vis/setColor blue
+
+
+##  L A Y E R 2
+/gate/pixel-1/daughters/name SiPM
+/gate/pixel-1/daughters/insert box
+/gate/SiPM/geometry/setXLength 3.000000 mm
+/gate/SiPM/geometry/setYLength 1. mm
+/gate/SiPM/geometry/setZLength 3.000000 mm
+/gate/SiPM/placement/setTranslation 0 18.5 0 mm
+/gate/SiPM/setMaterial Silicon
+/gate/SiPM/vis/forceSolid
+/gate/SiPM/vis/setColor red
+
+# R E P E A T C R Y S T A L
+/gate/pixel-1/cubicArray/setRepeatNumberX 16
+/gate/pixel-1/cubicArray/setRepeatNumberY 1
+/gate/pixel-1/cubicArray/setRepeatNumberZ 16
+/gate/pixel-1/cubicArray/setRepeatVector 3.2 0. 3.2 mm
+
+#
+# A T T A C H S Y S T E M
+/gate/systems/cylindricalPET/crystal/attach pixel-1
+
+# A T T A C H L A Y E R SD
+#/gate/CZC/attachCrystalSD
+#/gate/BGO/attachCrystalSD
+/gate/pixel-1/attachCrystalSD
+/gate/systems/cylindricalPET/describe
+
+# Phantom/Source
+/gate/cylindricalPET/daughters/name Phantom
+/gate/cylindricalPET/daughters/insert box
+/gate/Phantom/geometry/setXLength 0.00001 mm
+/gate/Phantom/geometry/setYLength 0.00001 mm
+/gate/Phantom/geometry/setZLength 0.00001 mm
+#/gate/Phantom/geometry/setXLength 10. mm
+#/gate/Phantom/geometry/setYLength 10. mm
+#/gate/Phantom/geometry/setZLength 10. mm
+/gate/Phantom/placement/setTranslation  0. -30. 0. mm
+/gate/Phantom/setMaterial Air
+/gate/Phantom/vis/setColor red
+/gate/Phantom/vis/forceWireframe
+/gate/Phantom/vis/setVisible 1
+/gate/Phantom/attachPhantomSD
+
+# Physics
+/gate/physics/addProcess PhotoElectric
+/gate/physics/processes/PhotoElectric/setModel StandardModel
+
+/gate/physics/addProcess Compton
+/gate/physics/processes/Compton/setModel PenelopeModel
+
+/gate/physics/addProcess RayleighScattering
+/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+
+/gate/physics/addProcess ElectronIonisation
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+
+/gate/physics/addProcess Bremsstrahlung
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+
+/gate/physics/addProcess eMultipleScattering e-
+
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+
+# Cuts
+/gate/physics/Gamma/SetCutInRegion PETHead 0.1 cm
+/gate/physics/Electron/SetCutInRegion PETHead 1 cm
+/gate/physics/Electron/SetCutInRegion PETHead 1 cm
+/gate/physics/Gamma/SetCutInRegion Phantom 0.1 cm
+/gate/physics/Electron/SetCutInRegion Phantom 1 cm
+/gate/physics/SetMaxStepSizeInRegion Phantom 0.1 cm
+/gate/physics/displayCuts
+
+# Initialization (1)
+/gate/run/initialize
+
+# Source
+/gate/source/addSource S49
+/gate/source/S49/gps/pos/type Volume
+/gate/source/S49/gps/pos/shape Cylinder
+/gate/source/S49/gps/centre 0. 0. 0. cm
+/gate/source/S49/gps/radius 0.0100000 cm
+/gate/source/S49/gps/halfz 0.01 cm
+/gate/source/S49/gps/particle gamma
+/gate/source/S49/gps/energy 511. keV
+/gate/source/S49/setActivity 1000000 Bq # 1 MBq
+/gate/source/S49/gps/angtype iso
+/gate/source/S49/gps/mintheta 90. deg
+/gate/source/S49/gps/maxtheta 90. deg
+/gate/source/S49/gps/minphi -90. deg
+/gate/source/S49/gps/maxphi -90. deg
+/gate/source/S49/setForcedHalfLife 6586.2 s # assuming F18
+
+/gate/source/list
+/gate/source/S49/attachTo Phantom
+
+# Digitizer
+/gate/digitizer/Singles/insert adder
+/gate/digitizer/Singles/insert blurring
+/gate/digitizer/Singles/blurring/setResolution 0.1
+/gate/digitizer/Singles/blurring/setEnergyOfReference 140. keV
+/gate/digitizer/Singles/insert spblurring
+/gate/digitizer/Singles/spblurring/setSpresolution 2.0 mm
+/gate/digitizer/Singles/spblurring/verbose 0
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 10. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 154. keV
+
+
+# Output
+#/gate/output/root/enable
+/gate/output/root/disable
+/gate/output/root/setFileName ./Outputs/TestPhoswich
+/gate/output/root/setRootHitFlag 0
+/gate/output/root/setRootSinglesFlag 1
+#/gate/output/root/setRootSinglesAdderFlag 0
+#/gate/output/root/setRootSinglesBlurringFlag 0
+#/gate/output/root/setRootSinglesSpblurringFlag 0
+#/gate/output/root/setRootSinglesThresholderFlag 0
+#/gate/output/root/setRootSinglesUpholderFlag 0
+
+/gate/output/binary/disable
+/gate/output/binary/setFileName ./Outputs/TestPhoswich
+/gate/output/binary/setOutFileHitsFlag 1
+/gate/output/binary/setOutFileSinglesFlag 1
+
+/gate/output/ascii/enable
+#/gate/output/ascii/disable
+/gate/output/ascii/setFileName ./Outputs/TestPhoswich
+/gate/output/ascii/setOutFileHitsFlag 1
+/gate/output/ascii/setOutFileSinglesFlag 1
+
+# Random
+# JamesRandom Ranlux64 MersenneTwister
+/gate/random/setEngineName Ranlux64
+#/gate/random/setEngineSeed default
+#/gate/random/setEngineSeed auto
+/gate/random/setEngineSeed 123456789
+#/gate/random/resetEngineFrom fileName
+/gate/random/verbose 0
+
+# Initialization (2)
+/gate/run/initialize
+
+## Experiment Time
+/gate/application/setTimeSlice 0.00001 s
+/gate/application/setTimeStart 0 s
+/gate/application/setTimeStop 0.00001 s
+
+# Verbosity
+/control/verbose 1
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+# L E T S   R U N   T H E   S I M U L A T I O N
+/gate/application/startDAQ
