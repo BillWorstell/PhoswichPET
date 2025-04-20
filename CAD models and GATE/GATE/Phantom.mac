@@ -1,0 +1,13 @@
+# PHANTOM
+# Create the phantom volume
+##
+
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert cylinder
+/gate/Phantom/geometry/setRmax 8.0 cm # 8.3 outside diameter, 8. inside diamenter
+/gate/Phantom/geometry/setRmin 0. cm
+/gate/Phantom/placement/setTranslation 0.0 0.0 0.0 cm
+
+/gate/Phantom/setMaterial Air
+/gate/Phantom/vis/setColor green
+/gate/Phantom/vis/setVisible 1
