@@ -1,0 +1,17 @@
+/gate/source/addSource S49
+/gate/source/S49/gps/type Volume
+/gate/source/S49/gps/shape Sphere
+/gate/source/S49/gps/centre -0.500000 -0.500000 -7.500000 cm
+/gate/source/S49/gps/radius 0.1500000 cm
+/gate/source/S49/gps/particle gamma
+/gate/source/S49/gps/energy 140.5 keV
+/gate/source/S49/setActivity 10000000 Bq
+/gate/source/S49/gps/angtype iso
+/gate/source/S49/gps/mintheta 0. deg
+/gate/source/S49/gps/maxtheta 180. deg
+/gate/source/S49/gps/minphi 279.016086 deg
+/gate/source/S49/gps/maxphi 283.016086 deg
+/gate/source/S49/setForcedHalfLife 21620.88 s
+/gate/source/S49/attachTo Phantom
+/gate/source/list
+
